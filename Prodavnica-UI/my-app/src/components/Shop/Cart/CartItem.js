@@ -12,7 +12,7 @@ const CartItem = (props) => {
   return (
     <TableRow>
       <TableCell sx={{ color: "black" }}>{props.name}</TableCell>
-      <TableCell sx={{ color: "black" }}>{price} RSD</TableCell>
+      <TableCell sx={{ color: "black" }}>{price} USD</TableCell>
       <TableCell sx={{ color: "black" }}>x{props.amount}</TableCell>
       <TableCell>
         <Button

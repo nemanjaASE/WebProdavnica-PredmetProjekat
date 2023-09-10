@@ -10,5 +10,6 @@ namespace Prodavnica.Interfaces.IService
 		Task<List<PorudzbinaDTO>> GetAllDostavljenePorudzbine(int id);
 		Task<List<PorudzbinaDTO>> GetAllNedostavljenePorudzbine(int id);
 		Task<bool> OdbijPorudzbinu(int id);
+		Task<bool> ApproveOrder(int id);
 	}
 }

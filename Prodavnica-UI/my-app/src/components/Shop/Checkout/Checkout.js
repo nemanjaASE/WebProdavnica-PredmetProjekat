@@ -5,6 +5,8 @@ import { Modal, Button, TextField, Box, Typography } from "@mui/material";
 import { createOrder } from "../../../services/PorudzbinaService";
 import CartContext from "../../../contexts/cart-context";
 
+import PayPal from "../../PayPal/PayPal";
+
 const Checkout = ({ open, onClose }) => {
   const exceptionRead = (value) => value.split(":")[1].split("at")[0];
   const cartCtx = useContext(CartContext);
@@ -20,7 +22,13 @@ const Checkout = ({ open, onClose }) => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      
+      console.log(cartCtx.items);
+      data.PorudzbinaProizvods = cartCtx.items.map((item) => ({
+        ProizvodId: item.id,
+        Kolicina: item.amount,
+      }))
+
+      console.log(data);
       const response = await createOrder(data);
 
       cartCtx.clearCart();
@@ -41,7 +49,7 @@ const Checkout = ({ open, onClose }) => {
           backgroundColor: "white",
           display: "flex",
           marginLeft: "43%",
-          width: 400,
+          width: 500,
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
@@ -107,6 +115,15 @@ const Checkout = ({ open, onClose }) => {
             >
               Otkaži
             </Button>
+            <Box  sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 5,
+            }}>
+              <PayPal data1={data} onClose={onClose}/>
+          </Box>
           </Box>
         </Box>
       </Box>

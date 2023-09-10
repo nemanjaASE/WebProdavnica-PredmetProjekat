@@ -10,6 +10,7 @@ import Verification from "../components/Verification/Verification.js";
 import Product from "../components/Product/Product.js";
 import Shop from "../components/Shop/Shop.js";
 import Orders from "../components/Orders/Orders.js";
+import Map from "../components/Map/Map.js";
 
 const AppRoutes = () => {
 
@@ -45,6 +46,10 @@ const AppRoutes = () => {
         path="/orders" 
         element={ulogovan ? <Orders /> : <Login />} 
         />
+              <Route 
+        path="/map" 
+        element={ulogovan ? <Map /> : <Login />} 
+      />
       </Routes>
     );
   };

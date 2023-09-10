@@ -28,20 +28,60 @@ import {
   getSalesmanDeliveredOrders,
   getSalesmanInProgressOrders,
   denyOrder,
+  approveOrder,
 } from "../../services/PorudzbinaService";
 
-function Row({ row, onDenyOrder  }) {
+function Row({ row, onDenyOrder, onApproveOrder  }) {
 
   const exceptionRead = (value) => value.split(":")[1].split("at")[0];
 
   const [open, setOpen] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(
+    calculateRemainingTime(row.vremeDostave)
+  );
   const authCtx = useContext(AuthContext);
   const role = authCtx.uloga;
 
+  console.log('eve ga', remainingTime);
+
   const isCustomer = role === "KUPAC";
+  const isSalesman = role === "PRODAVAC";
+
+  function calculateRemainingTime(deliveryTime) {
+    const deliveryDate = new Date(deliveryTime);
+    const startDate = new Date();
+    const remainingTime = deliveryDate.getTime() - startDate.getTime();
+
+    const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+    const minutes = Math.floor(
+      (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+    const formattedTime = `${hours}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+    return formattedTime;
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newRemainingTime = calculateRemainingTime(row.vremeDostave);
+      setRemainingTime(newRemainingTime);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [row.vremeDostave]);
 
   const handleDenyOrder = () => {
     onDenyOrder(row.id);
+  };
+
+  const handleApproveOrder = () => {
+    onApproveOrder(row.id);
   };
 
   return (
@@ -63,9 +103,9 @@ function Row({ row, onDenyOrder  }) {
         <TableCell align="center" sx={{ color: "black" }}>{row.adresa}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.cena}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.vremeNarudzbine.split(".")[0]}</TableCell>
-        <TableCell align="center" sx={{ color: "black" }}>{row.vremeDostave.split(".")[0]}</TableCell>
+        <TableCell align="center" sx={{ color: "black" }}>{row.approved && row.status !== 'ODBIJENA' && (new Date(row.vremeDostave) >= Date.now()) && remainingTime}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.status}</TableCell>
-        {isCustomer && row.status === 'UTOKU' && (new Date(row.vremeDostave) >= Date.now()) &&
+        {isCustomer && row.status === 'UTOKU' && (new Date(row.vremeDostave) >= Date.now()) && row.approved &&
         <TableCell align="center" sx={{ color: "black" }}><Button sx={{ ml: 2, mt: 1, backgroundColor: "crimson",
         '&:hover': {
           backgroundColor: 'white',
@@ -74,6 +114,12 @@ function Row({ row, onDenyOrder  }) {
         onClick={handleDenyOrder}
         variant="contained"
         color="secondary">Otkaži</Button></TableCell>
+        }
+        {isSalesman && row.approved === false && row.status === "UTOKU" && (new Date(row.vremeDostave) >= Date.now()) &&
+          <TableCell align="center" sx={{ color: "white" }}><Button sx={{ ml: 2, mt: 1 }}
+            onClick={handleApproveOrder}
+            variant="contained"
+            color="success">Potvrdi</Button></TableCell>
         }
       </TableRow>
       <TableRow>
@@ -100,7 +146,7 @@ function Row({ row, onDenyOrder  }) {
                       Količina
                     </TableCell>
                     <TableCell align="right" sx={{ color: "crimson" }}>
-                      Ukupna cena (RSD)
+                      Ukupna cena (USD)
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -108,19 +154,19 @@ function Row({ row, onDenyOrder  }) {
                   {row.porudzbinaProizvods.map((porudzbinaProizvod) => (
                     <TableRow key={porudzbinaProizvod.id}>
                       <TableCell align="center" sx={{ color: "black" }}>
-                        {porudzbinaProizvod.proizvod.ime}
+                        {porudzbinaProizvod.proizvod.naziv}
                       </TableCell>
                       <TableCell align="center" sx={{ color: "black" }}>
                         {porudzbinaProizvod.proizvod.opis}
                       </TableCell>
                       <TableCell align="center" sx={{ color: "black" }}>
-                        {porudzbinaProizvod.proizvod.cena} RSD
+                        {porudzbinaProizvod.proizvod.cena} USD
                       </TableCell>
                       <TableCell align="center" sx={{ color: "black" }}>
                         x{porudzbinaProizvod.kolicina}
                       </TableCell>
                       <TableCell align="right" sx={{ color: "black" }}>
-                        {porudzbinaProizvod.kolicina * porudzbinaProizvod.proizvod.cena} RSD
+                        {porudzbinaProizvod.kolicina * porudzbinaProizvod.proizvod.cena} USD
                       </TableCell>
                     </TableRow>
                   ))}
@@ -187,6 +233,17 @@ const Orders = () => {
     }
   };
 
+  const handleApproveOrder = async (orderId) => {
+    try {
+      // Implement your logic to approve the order
+      const response = await approveOrder(orderId);
+      setChange(!change);
+      alert("You approve order succesfully!");
+    } catch (error) {
+      if (error) alert(exceptionRead(error.response.data));
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (isAdmin) {
@@ -208,10 +265,8 @@ const Orders = () => {
         if (isSalesman) {
           try {
             const responseInProgress = await getSalesmanInProgressOrders();
-
-            setData(responseInProgress.data);
             const responseDelivered = await getSalesmanDeliveredOrders();
-            setDelivered(responseDelivered);
+            setData(responseDelivered.data.concat(responseInProgress.data));
           } catch (error) {
             if (error) alert(exceptionRead(error.response.data));
             return;
@@ -227,13 +282,8 @@ const Orders = () => {
         try {
           const responseInProgress = await getCustomerInProgressOrders();
 
-          setData(responseInProgress.data);
           const responseDelivered = await getCustomerDeliveredOrders();
-          
-          // setData((data) => ({
-          //   ...data,
-          //   ...responseDelivered.data,
-          // }));
+          setData(responseDelivered.data.concat(responseInProgress.data));
         } catch (error) {
           if (error) alert(exceptionRead(error.response.data));
           return;
@@ -299,6 +349,7 @@ const Orders = () => {
                   key={row.id}
                   row={row}
                   onDenyOrder={handleDenyOrder}
+                  onApproveOrder={handleApproveOrder}
                 />)}
                   {delivered.length > 0 &&
                   delivered.map((row) => <Row key={row.id} row={row} />)}

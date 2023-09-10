@@ -24,3 +24,7 @@ export const createOrder = async (orderData) => {
 export const denyOrder = async (id) => {
   return await api.put(`/porudzbina/odbij-porudzbinu/`+id);
 };
+
+export const approveOrder = async (id) => {
+  return await api.put(`/porudzbina/approve-order/`+id);
+}

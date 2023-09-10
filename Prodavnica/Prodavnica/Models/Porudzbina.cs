@@ -20,6 +20,8 @@ namespace Prodavnica.Models
 
 		public EStatusPorudzbine Status { get; set; }
 
+		public bool Approved { get; set; }
+
 		public List<PorudzbinaProizvod>? PorudzbinaProizvods { get; set; }
 
 		public Korisnik? Korisnik { get; set; }

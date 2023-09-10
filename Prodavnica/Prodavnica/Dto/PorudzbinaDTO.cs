@@ -18,6 +18,8 @@ namespace Prodavnica.Dto
 
 		public string Status { get; set; }
 
+		public bool Approved { get; set; }
+
 		public List<PorudzbinaProizvodDTO>? porudzbinaProizvods { get; set; }
 
 		public int KorisnikId { get; set; }

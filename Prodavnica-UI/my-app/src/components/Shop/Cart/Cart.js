@@ -29,6 +29,7 @@ const Cart = ({ open, onClose }) => {
 
   const cartItemAddHandler = (item) => {
     cartCtx.addItem(item);
+    console.log(item);
   };
 
   const openCheckoutHandler = () => {
@@ -89,8 +90,8 @@ const Cart = ({ open, onClose }) => {
           </Table>
         </Box>
 
-        <Typography sx={{ color: "green", marginTop: "20px" }}>Ukupna cena: {totalAmount} RSD</Typography>
-        <Typography sx={{ color: "crimson",marginTop: "5px" }}>Poštarina: 350 RSD</Typography>
+        <Typography sx={{ color: "green", marginTop: "20px" }}>Ukupna cena: {totalAmount} USD</Typography>
+        <Typography sx={{ color: "crimson",marginTop: "5px" }}>Poštarina: 4 USD</Typography>
 
         <Box display="flex" justifyContent="center" alignItems="center">
           {hasItems && (

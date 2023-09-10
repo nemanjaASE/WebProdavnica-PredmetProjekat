@@ -118,7 +118,7 @@ const Shop = () => {
     {
       field: 'cartButton',
       headerName: '',
-      width: 200,
+      width: 650,
       sortable: false,
       disableColumnMenu: true,
       headerAlign: 'right',
@@ -154,7 +154,6 @@ const Shop = () => {
           marginTop: 5,
           marginBottom: 1,
           backgroundColor: "white",
-          
         }}
       >
         <DataGrid

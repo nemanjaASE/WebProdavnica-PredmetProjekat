@@ -122,7 +122,7 @@ namespace Prodavnica.Service
 					{
 						foreach (Proizvod proizvod in proizvodiOdProdavca)
 						{
-							if (proizvod.Id.Equals(pp.ProizvodId))
+							if (proizvod.Id.Equals(pp.ProizvodId) && !porudzbineOdProdavca.Contains(porudzbina))
 							{
 								porudzbineOdProdavca.Add(porudzbina);
 							}
@@ -164,7 +164,8 @@ namespace Prodavnica.Service
 			novaPorudzbina.Status = Common.EStatusPorudzbine.UTOKU;
 			novaPorudzbina.VremeNarudzbine = DateTime.Now;
 			novaPorudzbina.VremeDostave = DateTime.Now.AddHours(1).AddMinutes(new Random().Next(60));
-			novaPorudzbina.CenaZaDostavu = 350;
+			novaPorudzbina.CenaZaDostavu = 4;
+			novaPorudzbina.Approved = false;
 
 			foreach (PorudzbinaProizvod pp in novaPorudzbina.PorudzbinaProizvods)
 			{
@@ -208,6 +209,21 @@ namespace Prodavnica.Service
 					}
 				}
 			}
+
+			await _porudzbinaRepo.SaveChanges();
+
+			return true;
+		}
+
+		public async Task<bool> ApproveOrder(int id)
+		{
+			Porudzbina por = await _porudzbinaRepo.GetPorudzbinaById(id);
+
+			if (por == null)
+				throw new Exception($"Order with ID: {id} doesn't exist.");
+
+			por.Approved = true;
+			por.VremeDostave = por.VremeDostave.AddHours(1).AddMinutes(new Random().Next(60));
 
 			await _porudzbinaRepo.SaveChanges();
 

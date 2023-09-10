@@ -14,6 +14,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupsIcon from '@mui/icons-material/Groups';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const Dashboard = () => {
     const authCtx = useContext(AuthContext);
@@ -44,6 +45,10 @@ const Dashboard = () => {
     
       const shopHandler = async () => {
         navigate("/shop");
+      };
+
+      const mapHandler = async () => {
+        navigate("/map");
       };
 
     return (
@@ -348,11 +353,39 @@ const Dashboard = () => {
                   Porudžbine
                 </Button>
               </Box>
+              <Box sx={{ m: 2 }}>
+                <Button
+                  sx={{
+                    color: "#141e30",
+                    justifyContent: "left",
+                    width: "180px",
+                    fontSize: "14px",
+                    padding: "5px 5px",
+                    backgroundColor: "white",
+                    "&:hover": {
+                      backgroundColor: "crimson",
+                    },
+                  }}
+                  variant="contained"
+                  startIcon={
+                    <LocationOnIcon
+                      sx={{ fontSize: "40px", width: "40px", height: "40px" }}
+                    />
+                  }
+                  size="large"
+                  color="primary"
+                  onClick={mapHandler}
+                >
+                  Mapa
+                </Button>
+              </Box>
             </>
+            
           )}
         </Box>
+        
         )}
-
+        
       </>
     )};
     

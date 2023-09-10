@@ -23,7 +23,7 @@ namespace Prodavnica.Service
 		private readonly IConfigurationSection _googleClientId;
 
 		public AuthService(IMapper mapper, IConfiguration configuration, IKorisnikRepository repo)
-        {
+        {   
 			_mapper = mapper;
 			_configuration = configuration;
 			_repositoryKorisnik = repo;

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S/oaOikk9hlidfaAx/mbu5VM+ZjpGcIUq9vmb0Omx00TToLpbtvq+0MPXPD71VT+yksqAPMRWvXADbNaxhdm0g==",
+  "dgSpecHash": "WnBRx0N081AxEQmv3c3SrwG04nTNrfRIzvftGtcX0gaXl9PklJHslltrdVF2g52eRjfB74kf07rVcj3rvDCfXg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
+  "projectFilePath": "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\night\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\night\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

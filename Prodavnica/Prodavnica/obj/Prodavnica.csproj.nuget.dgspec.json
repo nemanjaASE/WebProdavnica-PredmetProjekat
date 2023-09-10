@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj": {}
+    "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj": {}
   },
   "projects": {
-    "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj": {
+    "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
+        "projectUniqueName": "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
         "projectName": "Prodavnica",
-        "projectPath": "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
+        "projectPath": "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\Prodavnica.csproj",
         "packagesPath": "C:\\Users\\night\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\night\\Desktop\\Web2Projekat\\Prodavnica\\Prodavnica\\obj\\",
+        "outputPath": "C:\\Users\\night\\Desktop\\WebProdavnica-PredmetProjekat\\Prodavnica\\Prodavnica\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\night\\AppData\\Roaming\\NuGet\\NuGet.Config",
