@@ -42,8 +42,6 @@ function Row({ row, onDenyOrder, onApproveOrder  }) {
   const authCtx = useContext(AuthContext);
   const role = authCtx.uloga;
 
-  console.log('eve ga', remainingTime);
-
   const isCustomer = role === "KUPAC";
   const isSalesman = role === "PRODAVAC";
 
@@ -51,6 +49,9 @@ function Row({ row, onDenyOrder, onApproveOrder  }) {
     const deliveryDate = new Date(deliveryTime);
     const startDate = new Date();
     const remainingTime = deliveryDate.getTime() - startDate.getTime();
+
+    if(remainingTime <= 0)
+      return 0
 
     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
     const minutes = Math.floor(
@@ -103,9 +104,9 @@ function Row({ row, onDenyOrder, onApproveOrder  }) {
         <TableCell align="center" sx={{ color: "black" }}>{row.adresa}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.cena}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.vremeNarudzbine.split(".")[0]}</TableCell>
-        <TableCell align="center" sx={{ color: "black" }}>{row.approved && row.status !== 'ODBIJENA' && (new Date(row.vremeDostave) >= Date.now()) && remainingTime}</TableCell>
+        <TableCell align="center" sx={{ color: "black" }}>{row.approved && row.status !== 'ODBIJENA' && remainingTime !== 0 && remainingTime}</TableCell>
         <TableCell align="center" sx={{ color: "black" }}>{row.status}</TableCell>
-        {isCustomer && row.status === 'UTOKU' && (new Date(row.vremeDostave) >= Date.now()) && row.approved &&
+        {isCustomer && row.status === 'UTOKU' && row.approved && remainingTime !== 0  &&
         <TableCell align="center" sx={{ color: "black" }}><Button sx={{ ml: 2, mt: 1, backgroundColor: "crimson",
         '&:hover': {
           backgroundColor: 'white',
@@ -115,7 +116,7 @@ function Row({ row, onDenyOrder, onApproveOrder  }) {
         variant="contained"
         color="secondary">Otkaži</Button></TableCell>
         }
-        {isSalesman && row.approved === false && row.status === "UTOKU" && (new Date(row.vremeDostave) >= Date.now()) &&
+        {isSalesman && row.approved === false && row.status === "UTOKU"  &&
           <TableCell align="center" sx={{ color: "white" }}><Button sx={{ ml: 2, mt: 1 }}
             onClick={handleApproveOrder}
             variant="contained"

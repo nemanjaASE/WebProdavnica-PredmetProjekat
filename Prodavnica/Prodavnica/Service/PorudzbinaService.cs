@@ -163,7 +163,6 @@ namespace Prodavnica.Service
 			novaPorudzbina.KorisnikId = korisnikId;
 			novaPorudzbina.Status = Common.EStatusPorudzbine.UTOKU;
 			novaPorudzbina.VremeNarudzbine = DateTime.Now;
-			novaPorudzbina.VremeDostave = DateTime.Now.AddHours(1).AddMinutes(new Random().Next(60));
 			novaPorudzbina.CenaZaDostavu = 4;
 			novaPorudzbina.Approved = false;
 
@@ -223,7 +222,7 @@ namespace Prodavnica.Service
 				throw new Exception($"Order with ID: {id} doesn't exist.");
 
 			por.Approved = true;
-			por.VremeDostave = por.VremeDostave.AddHours(1).AddMinutes(new Random().Next(60));
+			por.VremeDostave = DateTime.Now.AddHours(1).AddMinutes(new Random().Next(60));
 
 			await _porudzbinaRepo.SaveChanges();
 
