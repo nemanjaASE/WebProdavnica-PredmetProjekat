@@ -35,7 +35,7 @@ const Map = () => {
 
       const getOrders = async () => {
         const orders = await getSalesmanInProgressOrders();
-        console.log(orders);    
+ 
         const markersData = [];
         for (const o of orders.data) {
           if(!o.approved)
@@ -68,10 +68,10 @@ const Map = () => {
           !order.approved && (
           <Marker position={[order.lat, order.lon]} icon={customIcon}>
             <Popup>
-                <Typography>Address: {order.address}</Typography>
-                <Typography>Comment: {order.comment}</Typography>
-                <Typography>Price: {order.price}$</Typography>
-                <Typography>Status: {order.status ? "Approved" : "Pending"}</Typography>
+                <Typography>Adresa: {order.address}</Typography>
+                <Typography>Komentar: {order.comment}</Typography>
+                <Typography>Cena: {order.price}$</Typography>
+                <Typography>Status: {order.status ? "ODOBRENA" : "U TOKU"}</Typography>
                 </Popup>
           </Marker>)
         ))} 

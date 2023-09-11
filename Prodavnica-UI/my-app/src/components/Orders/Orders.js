@@ -236,10 +236,10 @@ const Orders = () => {
 
   const handleApproveOrder = async (orderId) => {
     try {
-      // Implement your logic to approve the order
+
       const response = await approveOrder(orderId);
       setChange(!change);
-      alert("You approve order succesfully!");
+      alert("Uspešno ste potvrdili porudžbinu.");
     } catch (error) {
       if (error) alert(exceptionRead(error.response.data));
     }
