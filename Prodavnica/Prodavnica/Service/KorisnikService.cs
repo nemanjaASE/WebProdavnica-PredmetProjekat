@@ -42,7 +42,7 @@ namespace Prodavnica.Service
 			if (korisnik != null)
 			{
 
-				await _email.SendEmail("vbnnp130595@gmail.com", korisnik.Verifikacija.ToString());
+				await _email.SendEmail(korisnik.Email, korisnik.Verifikacija.ToString());
 
 			}
 

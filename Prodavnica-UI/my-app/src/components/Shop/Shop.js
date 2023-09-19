@@ -118,7 +118,7 @@ const Shop = () => {
     {
       field: 'cartButton',
       headerName: '',
-      width: 650,
+      width: 350,
       sortable: false,
       disableColumnMenu: true,
       headerAlign: 'right',

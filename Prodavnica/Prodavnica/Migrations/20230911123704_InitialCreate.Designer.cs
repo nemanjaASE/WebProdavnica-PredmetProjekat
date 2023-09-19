@@ -12,8 +12,8 @@ using Prodavnica.Data;
 namespace Prodavnica.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230909112004_AddApproved")]
-    partial class AddApproved
+    [Migration("20230911123704_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

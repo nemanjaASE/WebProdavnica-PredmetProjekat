@@ -40,7 +40,7 @@ const Checkout = ({ open, onClose }) => {
     }
   };
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} sx={{overflowY: "scroll",}}>
       <Box
         component="form"
         noValidate
@@ -49,11 +49,11 @@ const Checkout = ({ open, onClose }) => {
           backgroundColor: "white",
           display: "flex",
           marginLeft: "43%",
-          width: 500,
+          width: 650,
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
-          marginTop: "12%",
+          marginTop: "0%",
         }}
       >
         <Typography sx={{ color: "black", fontSize: 28, marginTop: 5 }}>Provera adrese</Typography>

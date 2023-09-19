@@ -45,6 +45,7 @@ namespace Prodavnica.Migrations
                     VremeNarudzbine = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VremeDostave = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Approved = table.Column<bool>(type: "bit", nullable: false),
                     KorisnikId = table.Column<int>(type: "int", nullable: false),
                     CenaZaDostavu = table.Column<int>(type: "int", nullable: false)
                 },
